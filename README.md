@@ -31,6 +31,12 @@ Clone/git pull the repo into any local directory
 $ git clone https://github.com/oliverwilms/iris-log-viewer.git
 ```
 
+I run containers on AWS EC2 instance. I needed to adjust directory permission:
+
+```
+$ chmod 777 iris-log-viewer
+```
+
 Open the terminal in this directory and call the command to build and run InterSystems IRIS in container:
 
 ```
