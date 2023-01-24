@@ -7,9 +7,19 @@
       <Description>IRIS Console Log Viewer</Description>
       <Packaging>module</Packaging>
       <SourcesRoot>src</SourcesRoot>
-      <Resource Name="dc.sample.PKG"/>
+      <Resource Name="otw.log.PKG"/>
       <UnitTest Name="/tests" Package="dc.sample.unittests" Phase="test"/>
-
+      <CSPApplication 
+        Url="/irisapp"
+        MatchRoles=":{$dbrole}"
+        PasswordAuthEnabled="1"
+        UnauthenticatedEnabled="0"
+        SourcePath="/csp"
+        DeployPath="{$cspdir}/irisapp"
+        ServeFiles="1"
+        Recurse="1"
+        CookiePath="/irisapp"
+      />
     </Module>
   </Document>
 </Export>
