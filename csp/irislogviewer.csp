@@ -1,0 +1,113 @@
+<csp:class description="View Console Log">
+<html>
+<head>
+
+<title>	Cache Server Page </title>
+
+</head>
+
+<body>
+<script language="Cache" runat="server">
+	Do ..DisplayLog()
+</script>
+
+</body>
+
+<script language="Cache" method="DisplayLog" arguments="">
+	New dir
+	Set iFormat = "DISPLAY"
+	If ($data(%request.Data("iFormat",1))) {
+	 	Set iFormat = %request.Data("iFormat",1)
+	}
+	If ($data(%request.Data("iFromPeriod",1))) {
+	 	Set iFromPeriod = %request.Data("iFromPeriod",1)
+	 	Set pFilter("iFromPeriod") = iFromPeriod
+	}
+	If ($data(%request.Data("iMaxSeverity",1))) {
+	 	Set iMaxSeverity = %request.Data("iMaxSeverity",1)
+	 	Set pFilter("iMaxSeverity") = iMaxSeverity
+	}
+	If ($data(%request.Data("iMinSeverity",1))) {
+	 	Set iMinSeverity = %request.Data("iMinSeverity",1)
+	 	Set pFilter("iMinSeverity") = iMinSeverity
+	}
+	If ($data(%request.Data("iToPeriod",1))) {
+	 	Set iToPeriod = %request.Data("iToPeriod",1)
+	 	Set pFilter("iToPeriod") = iToPeriod
+	}
+	If $get(%request.CgiEnvs("SERVER_NAME"))'="" {
+		Set url="//"_%request.CgiEnvs("SERVER_NAME")_%request.URL
+	} Else {
+		Set url=%request.URL
+	}
+	Set dir = $$GetFilename^%apiCSP(url)
+	If $$$isWINDOWS Set dir = $translate(dir,"\","/")
+ 	If $$$isVMS {
+ 		Set dir = $piece(dir,"]")_"]"
+ 	} Else {
+ 		Set dir = $piece(dir,"/",1,$length(dir,"/")-1)
+ 	}
+	Set mgrdir = $system.Util.ManagerDirectory()  // $zu(12)
+	Set source = mgrdir_"messages.log"
+	Set target = dir_"/download_messages.log"
+	Set tSC = ##class(otw.log.Log).CopyFile(source,target,1,.return)
+	&html<
+		<P><B>Date/Time:</B>
+		<label for="fromperiod">From</label>
+		<input type="datetime-local" id="fromperiod" name="from" value="#($Get(iFromPeriod))#">
+		<label for="toperiod">to</label>
+		<input type="datetime-local" id="toperiod" name="to" value="#($Get(iToPeriod))#">
+		<B>Levels:</B>
+		<label for="fromlevel">From</label>
+		<input type="text" id="fromlevel" name="from" value="#($Get(iMinSeverity))#">
+		<label for="tolevel">to</label>
+		<input type="text" id="tolevel" name="to" value="#($Get(iMaxSeverity))#">
+		<P>Copy Result: <B>#(dir_tSC)#</B>
+		<a href="download_messages.log" download="messages.log" target="_blank">Download link</a>
+ 	>
+	&html<<button type="button" onclick="goClickButton('DISPLAY')">Display</button>>
+	&html<<button type="button" onclick="goClickButton('RAW')">Raw</button>>
+ 	&html<<table cellpadding=0 border=1>>
+	If ($Get(iFormat,"DISPLAY") = "DISPLAY") {
+		Set pFile = ""
+		Set pImport = 1
+		//Set pMaxLines = 5
+		//Set pFilter("pMaxLines") = pMaxLines
+		//Set tSC = ##class(otw.log.Log).ReadLogLines(pFile,.pLines,pMaxLines,pImport)
+		Set tSC = ##class(otw.log.Log).ImportMessages(pFile,.pLines,.pFilter,pImport)
+		Set tSC = ##class(otw.log.Log).OutputTableData()
+	}
+	If ($Get(iFormat,"DISPLAY") = "RAW") {
+		Set pFile = ""
+		Set pImport = 0
+		Set pMaxLines = -1
+		Set pFilter("pMaxLines") = pMaxLines
+		Set tSC = ##class(otw.log.Log).ReadLogLines(pFile,.pLines,.pFilter,pImport)
+		Set tSC = ##class(otw.log.Log).OutputRawData(.pLines)
+	}
+	&html<
+	</table>
+	<hr>>
+	Quit
+</script>
+<script language="JavaScript">
+function goClickButton(id)
+{
+	if (id == 'MENU') {
+		document.location = "menu.csp";
+		return;
+	}
+	var iFormat = "DISPLAY";
+	if (id == 'RAW') {
+		iFormat = "RAW";
+	}
+	var iFromPeriod = document.getElementById("fromperiod").value;
+	var iToPeriod = document.getElementById("toperiod").value;
+	var iMinSeverity = document.getElementById("fromlevel").value;
+	var iMaxSeverity = document.getElementById("tolevel").value;
+	var params = "iFormat=" + iFormat + "&iFromPeriod=" + iFromPeriod + "&iToPeriod=" + iToPeriod + "&iMinSeverity=" + iMinSeverity + "&iMaxSeverity=" + iMaxSeverity;
+	document.location = "irislogviewer.csp?" + params
+}
+</script>
+
+</html>
