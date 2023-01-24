@@ -13,7 +13,7 @@ WORKDIR /home/irisowner/irisdev
 ##USER ${ISC_PACKAGE_MGRUSER}
 
 ARG TESTS=0
-ARG MODULE="dc-sample"
+ARG MODULE="iris-log-viewer"
 ARG NAMESPACE="IRISAPP"
 
 ## Embedded Python environment
