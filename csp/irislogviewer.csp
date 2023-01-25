@@ -71,9 +71,8 @@
 	If ($Get(iFormat,"DISPLAY") = "DISPLAY") {
 		Set pFile = ""
 		Set pImport = 1
-		//Set pMaxLines = 5
-		//Set pFilter("pMaxLines") = pMaxLines
-		//Set tSC = ##class(otw.log.Log).ReadLogLines(pFile,.pLines,pMaxLines,pImport)
+		Set pMaxLines = 5
+		Set pFilter("pMaxLines") = pMaxLines
 		Set tSC = ##class(otw.log.Log).ImportMessages(pFile,.pLines,.pFilter,pImport)
 		Set tSC = ##class(otw.log.Log).OutputTableData()
 	}
