@@ -49,7 +49,7 @@
  	}
 	Set mgrdir = $system.Util.ManagerDirectory()  // $zu(12)
 	Set source = mgrdir_"messages.log"
-	Set target = dir_"/download_messages.log"
+	Set target = dir_"/download_messages.txt"
 	Set tSC = ##class(otw.log.Log).CopyFile(source,target,1,.return)
 	&html<
 		<P><B>Date/Time:</B>
@@ -63,7 +63,7 @@
 		<label for="tolevel">to</label>
 		<input type="text" id="tolevel" name="to" value="#($Get(iMaxSeverity))#">
 		<P>Copy Result: <B>#(dir_tSC)#</B>
-		<a href="download_messages.log" download="messages.log" target="_blank">Download link</a>
+		<a href="download_messages.txt" download="messages.log" target="_blank">Download link</a>
  	>
 	&html<<button type="button" onclick="goClickButton('DISPLAY')">Display</button>>
 	&html<<button type="button" onclick="goClickButton('RAW')">Raw</button>>
