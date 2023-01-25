@@ -37,11 +37,7 @@ ClassMethod AddLineTest() As %Status
 	Quit tSC
 }
 
-ClassMethod CopyFile(
-	pFrom As %String,
-	pTo As %String,
-	pDeleteBeforeCopy As %Boolean = 0,
-	Output return As %Integer) As %Boolean
+ClassMethod CopyFile(pFrom As %String, pTo As %String, pDeleteBeforeCopy As %Boolean = 0, Output return As %Integer) As %Boolean
 {
 	If ($Get(pFrom) = "") {
 		Set mgrDir = $ZU(12)
@@ -55,11 +51,7 @@ ClassMethod CopyFile(
 	Quit tSC
 }
 
-ClassMethod ImportLine(
-	pLine As %String = "",
-	ByRef pLog As Log,
-	ByRef pFilter,
-	pImport = 1) As %Status
+ClassMethod ImportLine(pLine As %String = "", ByRef pLog As Log, ByRef pFilter, pImport = 1) As %Status
 {
 	Set tSC = $$$OK
 	Set iMinSeverity = $Get(pFilter("iMinSeverity"),0)
@@ -137,12 +129,7 @@ ClassMethod ImportLine(
 	Quit tSC
 }
 
-ClassMethod ImportMessages(
-	pFile As %String,
-	ByRef pLines,
-	ByRef pFilter = -1,
-	pImport = 1,
-	pDebug = 0) As %Status
+ClassMethod ImportMessages(pFile As %String, ByRef pLines, ByRef pFilter = -1, pImport = 1, pDebug = 0) As %Status
 {
 	If pDebug {
 		Write "Import Messages begins at ",$ZDATETIME($HOROLOG),!
@@ -193,7 +180,7 @@ ClassMethod OutputRawData(ByRef pLines) As %Status
 	Quit tSC
 }
 
-ClassMethod OutputTableData() As %Status
+ClassMethod OutputTableData(pVerbose = 0) As %Status
 {
 	Set tQuote = """"
 	Set tSC = $$$OK
@@ -201,7 +188,7 @@ ClassMethod OutputTableData() As %Status
 	Set pWhere = ""  // ..FilterWhere(pWhere)
 	If (pWhere '= "") Set tWHERE = " WHERE "_pWhere
 	Set tOrder = ""  // " ORDER BY TranDate ASC, TranTime ASC"
-	Set tQuery = "SELECT * FROM Log"_tWHERE_tOrder
+	Set tQuery = "SELECT * FROM otw_log.Log"_tWHERE_tOrder
 	Set tStatement = ##class(%SQL.Statement).%New()
 	Set tSC = tStatement.%Prepare(.tQuery)  // Create a cached query
 	If $$$ISERR(tSC) { Quit tSC }
@@ -233,12 +220,7 @@ ClassMethod OutputTableData() As %Status
 	Quit tSC
 }
 
-ClassMethod ReadLogLines(
-	pFile As %String,
-	ByRef pLines,
-	ByRef pFilter = 10,
-	pImport = 1,
-	pDebug = 0) As %String
+ClassMethod ReadLogLines(pFile As %String, ByRef pLines, ByRef pFilter = 10, pImport = 1, pDebug = 0) As %String
 {
 	Write:pDebug "ReadLogLines",!
 	If ($Get(pFile) = "") {
@@ -281,6 +263,39 @@ ClassMethod ReadLogLines(
 	}
 	//Use 0
 	Quit $$$OK
+}
+
+Storage Default
+{
+<Data name="LogDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>LogDate</Value>
+</Value>
+<Value name="3">
+<Value>LogTime</Value>
+</Value>
+<Value name="4">
+<Value>LogDTun</Value>
+</Value>
+<Value name="5">
+<Value>Process</Value>
+</Value>
+<Value name="6">
+<Value>Severity</Value>
+</Value>
+<Value name="7">
+<Value>Text</Value>
+</Value>
+</Data>
+<DataLocation>^otw.log.LogD</DataLocation>
+<DefaultData>LogDefaultData</DefaultData>
+<IdLocation>^otw.log.LogD</IdLocation>
+<IndexLocation>^otw.log.LogI</IndexLocation>
+<StreamLocation>^otw.log.LogS</StreamLocation>
+<Type>%Storage.Persistent</Type>
 }
 
 }
