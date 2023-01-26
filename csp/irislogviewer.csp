@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>	Cache Server Page </title>
+<title>	Console Log Viewer </title>
 
 </head>
 
@@ -67,6 +67,7 @@
  	>
 	&html<<button type="button" onclick="goClickButton('DISPLAY')">Display</button>>
 	&html<<button type="button" onclick="goClickButton('RAW')">Raw</button>>
+	Set tSC = ##class(otw.log.Log).OutputAlerts()
  	&html<<table cellpadding=0 border=1>>
 	If ($Get(iFormat,"DISPLAY") = "DISPLAY") {
 		Set pFile = ""
