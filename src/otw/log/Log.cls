@@ -156,6 +156,19 @@ ClassMethod ImportMessages(pFile As %String, ByRef pLines, ByRef pFilter = -1, p
 	Quit tSC
 }
 
+ClassMethod OutputAlerts(pFile As %String = "") As %Status
+{
+	If (pFile = "") {
+		Set mgrDir = $ZU(12)
+		Set pFile = mgrDir_"alerts.log"
+	}
+	Set tSC = $$$OK
+	Set tExists = ##class(%Library.File).Exists(pFile)
+	If (0 = tExists) { Quit tSC }
+	Write "ALERTS from ",pFile,!
+	Quit tSC
+}
+
 ClassMethod OutputLogDate(pLogDate = 0) As %String
 {
 	Set tReturn = $ZDATE(pLogDate)
