@@ -67,6 +67,7 @@
  	>
 	&html<<button type="button" onclick="goClickButton('DISPLAY')">Display</button>>
 	&html<<button type="button" onclick="goClickButton('RAW')">Raw</button>>
+	&html<<hr>>
 	Set tSC = ##class(otw.log.Log).OutputAlerts()
  	&html<<table cellpadding=0 border=1>>
 	If ($Get(iFormat,"DISPLAY") = "DISPLAY") {
