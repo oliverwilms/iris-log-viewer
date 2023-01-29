@@ -77,7 +77,7 @@
 	&html<<button type="button" onclick="goClickButton('DISPLAY')">Display</button>>
 	&html<<button type="button" onclick="goClickButton('RAW')">Raw</button>>
 	&html<<hr>>
-	&html<<table cellpadding=0 border=1>>
+	&html<<table cellpadding=0 border=1 style="color:red;">>
 	Set pImportDeleteExtent = 4
 	Set pImportAlerts = 2
 	Set pImport = pImportDeleteExtent + pImportAlerts
