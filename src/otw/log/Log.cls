@@ -1,6 +1,8 @@
 Class otw.log.Log Extends %Persistent
 {
 
+Property Alert As %String;
+
 Property LogDate As %Date;
 
 Property LogTime As %String;
@@ -121,7 +123,11 @@ ClassMethod ImportLine(pLine As %String = "", ByRef pLog As Log, ByRef pFilter, 
 	If ($Get(pLogText) '= "") Set pLog.Text = pLogText
 	If ($Get(pProcess) '= "") Set pLog.Process = pProcess
 	If ($Get(pSeverity) '= "") Set pLog.Severity = pSeverity
-	If pImport Set tSC = pLog.%Save()
+	If pImport {
+		Set tFlag = (pImport #4)
+		If (tFlag > 1) Set pLog.Alert = 1
+		Set tSC = pLog.%Save()
+	}
 	If $$$ISERR(tSC) {
 		Set x = $System.Status.GetErrorText(tSC)
 		Set ^TESTlog($I(^TESTlog)) = x
@@ -134,7 +140,10 @@ ClassMethod ImportMessages(pFile As %String, ByRef pLines, ByRef pFilter = -1, p
 	If pDebug {
 		Write "Import Messages begins at ",$ZDATETIME($HOROLOG),!
 	}
-	Set tSC = ..%DeleteExtent()
+	Set tSC = $$$OK
+	If (pImport > 2) {
+		Set tSC = ..%DeleteExtent()
+	}
 	If $$$ISERR(tSC) {
 		Set x = $System.Status.GetErrorText(tSC)
 		If pDebug Write x,!
@@ -165,7 +174,13 @@ ClassMethod OutputAlerts(pFile As %String = "") As %Status
 	Set tSC = $$$OK
 	Set tExists = ##class(%Library.File).Exists(pFile)
 	If (0 = tExists) { Quit tSC }
-	Write "ALERTS from ",pFile,!
+	Set tStyle = "style=""color:red;"""
+	Write "<h1 ",tStyle,">"
+	Write "ALERTS from ",pFile
+	Write "</h1>",!
+	Write "<div ",tStyle,">",!
+	Write "<br>&nbsp;<br>",!
+	Write "</div>",!
 	Quit tSC
 }
 
@@ -240,6 +255,9 @@ ClassMethod ReadLogLines(pFile As %String, ByRef pLines, ByRef pFilter = 10, pIm
 		Set mgrDir = $ZU(12)
 		Set pFile = mgrDir_"messages.log"
 	}
+	Set tAlert = ""
+	If (pFile [ "alert") Set tAlert = 1
+	If (pFile [ "message") Set tAlert = 0
 	If ($Get(pFile) = "") Quit ""
 	Write:pDebug pFile,!
 	Set pLines = 0
@@ -278,37 +296,5 @@ ClassMethod ReadLogLines(pFile As %String, ByRef pLines, ByRef pFilter = 10, pIm
 	Quit $$$OK
 }
 
-Storage Default
-{
-<Data name="LogDefaultData">
-<Value name="1">
-<Value>%%CLASSNAME</Value>
-</Value>
-<Value name="2">
-<Value>LogDate</Value>
-</Value>
-<Value name="3">
-<Value>LogTime</Value>
-</Value>
-<Value name="4">
-<Value>LogDTun</Value>
-</Value>
-<Value name="5">
-<Value>Process</Value>
-</Value>
-<Value name="6">
-<Value>Severity</Value>
-</Value>
-<Value name="7">
-<Value>Text</Value>
-</Value>
-</Data>
-<DataLocation>^otw.log.LogD</DataLocation>
-<DefaultData>LogDefaultData</DefaultData>
-<IdLocation>^otw.log.LogD</IdLocation>
-<IndexLocation>^otw.log.LogI</IndexLocation>
-<StreamLocation>^otw.log.LogS</StreamLocation>
-<Type>%Storage.Persistent</Type>
-}
 
 }
