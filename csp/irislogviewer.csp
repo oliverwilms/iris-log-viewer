@@ -82,7 +82,7 @@
 	Set pMaxLines = -1
 	Set pFilter("pMaxLines") = pMaxLines
 	Set tSC = ##class(otw.log.Log).ImportMessages(alerts,.pAlertLines,.pFilter,pImport)
-	Set tSC = ##class(otw.log.Log).OutputAlerts(iFormat,.pAlertLines)
+	Set tSC = ##class(otw.log.Log).OutputAlerts(alerts,iFormat,.pAlertLines)
  	&html<<hr>>
 	&html<<table cellpadding=0 border=1>>
 	If ($Get(iFormat,"DISPLAY") = "DISPLAY") {
