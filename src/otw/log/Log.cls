@@ -179,11 +179,11 @@ ClassMethod OutputAlerts(pFile As %String = "", pFormat As %String = "", ByRef p
 	Write "ALERTS from ",pFile
 	Write "</h1>",!
 	Write "<div ",tStyle,">",!
-	If ($Get(iFormat,"DISPLAY") = "DISPLAY") {
+	If ($Get(pFormat,"DISPLAY") = "DISPLAY") {
 		Set pAlertFlag = 1
 		Set tSC = ##class(otw.log.Log).OutputTableData(pAlertFlag)
 	}
-	If ($Get(iFormat,"DISPLAY") = "RAW") {
+	If ($Get(pFormat,"DISPLAY") = "RAW") {
 		Set tSC = ##class(otw.log.Log).OutputRawData(.pLines)
 	}
 	Write "<br>&nbsp;<br>",!
