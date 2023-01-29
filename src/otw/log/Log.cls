@@ -56,6 +56,7 @@ ClassMethod CopyFile(pFrom As %String, pTo As %String, pDeleteBeforeCopy As %Boo
 ClassMethod ImportLine(pLine As %String = "", ByRef pLog As Log, ByRef pFilter, pImport = 1) As %Status
 {
 	Set tSC = $$$OK
+	Set iMaxSeverity = $Get(pFilter("iMaxSeverity"),-1)
 	Set iMinSeverity = $Get(pFilter("iMinSeverity"),0)
 	If (pLine = "") Set pLine = "Journaling switched to: c:\intersystems\irishealth\mgr\journal\20221015.001"
 	If (pLine = "") Set pLine = "01/21/23-11:30:25:402 (10888) 0 [Utility.Event] [SYSTEM MONITOR] Alert state cleared."
@@ -113,6 +114,7 @@ ClassMethod ImportLine(pLine As %String = "", ByRef pLog As Log, ByRef pFilter, 
 		} Catch { }
 		Set pLogText = pLine
 	}
+	If (iMaxSeverity > -1),($Get(pSeverity) > iMaxSeverity) Set pSkip = 1
 	If ($Get(pSeverity) < iMinSeverity) Set pSkip = 1
 	If ($Get(pSkip)) { Quit 0 }
 	Set pLog = ..%New()
