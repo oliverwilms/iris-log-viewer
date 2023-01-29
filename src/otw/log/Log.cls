@@ -165,7 +165,7 @@ ClassMethod ImportMessages(pFile As %String, ByRef pLines, ByRef pFilter = -1, p
 	Quit tSC
 }
 
-ClassMethod OutputAlerts(pFile As %String = "") As %Status
+ClassMethod OutputAlerts(pFile As %String = "", pFormat As %String = "", ByRef pLines) As %Status
 {
 	If (pFile = "") {
 		Set mgrDir = $ZU(12)
@@ -179,6 +179,13 @@ ClassMethod OutputAlerts(pFile As %String = "") As %Status
 	Write "ALERTS from ",pFile
 	Write "</h1>",!
 	Write "<div ",tStyle,">",!
+	If ($Get(iFormat,"DISPLAY") = "DISPLAY") {
+		Set pAlertFlag = 1
+		Set tSC = ##class(otw.log.Log).OutputTableData(pAlertFlag)
+	}
+	If ($Get(iFormat,"DISPLAY") = "RAW") {
+		Set tSC = ##class(otw.log.Log).OutputRawData(.pLines)
+	}
 	Write "<br>&nbsp;<br>",!
 	Write "</div>",!
 	Quit tSC
@@ -208,12 +215,13 @@ ClassMethod OutputRawData(ByRef pLines) As %Status
 	Quit tSC
 }
 
-ClassMethod OutputTableData(pVerbose = 0) As %Status
+ClassMethod OutputTableData(pAlertFlag = 0) As %Status
 {
 	Set tQuote = """"
 	Set tSC = $$$OK
 	Set tWHERE = ""
-	Set pWhere = ""  // ..FilterWhere(pWhere)
+	Set pWhere = "Alert is Null"
+	If pAlertFlag Set pWhere = "Alert = 1"
 	If (pWhere '= "") Set tWHERE = " WHERE "_pWhere
 	Set tOrder = ""  // " ORDER BY TranDate ASC, TranTime ASC"
 	Set tQuery = "SELECT * FROM otw_log.Log"_tWHERE_tOrder
