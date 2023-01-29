@@ -13,8 +13,13 @@
 
 </body>
 
+<script language="Cache" method="DebugText" arguments="pText">
+	Set ^TESTlog($I(^TESTlog)) = $ZDateTime($NOW(),8,1,3)_" : "_$JOB_" : "_pText
+</script>
+
 <script language="Cache" method="DisplayLog" arguments="">
-	New dir
+	New pDebug
+	Set pDebug = 0
 	Set iFormat = "DISPLAY"
 	If ($data(%request.Data("iFormat",1))) {
 	 	Set iFormat = %request.Data("iFormat",1)
@@ -49,9 +54,11 @@
  	}
 	Set mgrdir = $system.Util.ManagerDirectory()  // $zu(12)
 	Set alerts = mgrdir_"alerts.log"
+	If pDebug Do ..DebugText(alerts)
 	Set source = mgrdir_"messages.log"
 	Set target = dir_"/download_messages.txt"
-	Set tSC = ##class(otw.log.Log).CopyFile(source,target,1,.return)
+	Set pDeleteBeforeCopy = 1
+	Set tSC = ##class(otw.log.Log).CopyFile(source,target,pDeleteBeforeCopy,.return)
 	&html<
 		<P><B>Date/Time:</B>
 		<label for="fromperiod">From</label>
