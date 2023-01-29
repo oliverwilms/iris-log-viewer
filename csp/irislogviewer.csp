@@ -48,6 +48,7 @@
  		Set dir = $piece(dir,"/",1,$length(dir,"/")-1)
  	}
 	Set mgrdir = $system.Util.ManagerDirectory()  // $zu(12)
+	Set alerts = mgrdir_"alerts.log"
 	Set source = mgrdir_"messages.log"
 	Set target = dir_"/download_messages.txt"
 	Set tSC = ##class(otw.log.Log).CopyFile(source,target,1,.return)
@@ -68,6 +69,10 @@
 	&html<<button type="button" onclick="goClickButton('DISPLAY')">Display</button>>
 	&html<<button type="button" onclick="goClickButton('RAW')">Raw</button>>
 	&html<<hr>>
+	Set pImportDeleteExtent = 4
+	Set pImportAlerts = 2
+	Set pImport = pImportDeleteExtent + pImportAlerts
+	Set tSC = ##class(otw.log.Log).ImportMessages(alerts,.pLines,.pFilter,pImport)
 	Set tSC = ##class(otw.log.Log).OutputAlerts()
  	&html<<hr>>
 	&html<<table cellpadding=0 border=1>>
