@@ -20,8 +20,13 @@
 
 <script language="Cache" method="DisplayLog" arguments="">
 	New pDebug
-	Set pDebug = 0
+	Set pDebug = 1
+	Set iAlerts = 0
 	Set iFormat = "DISPLAY"
+	If ($data(%request.Data("iAlerts",1))) {
+	 	Set iAlerts = %request.Data("iAlerts",1)
+	}
+	If pDebug Do ..DebugText(iAlerts)
 	If ($data(%request.Data("iFormat",1))) {
 	 	Set iFormat = %request.Data("iFormat",1)
 	}
@@ -71,12 +76,17 @@
 		<input type="text" id="fromlevel" name="from" value="#($Get(iMinSeverity))#">
 		<label for="tolevel">to</label>
 		<input type="text" id="tolevel" name="to" value="#($Get(iMaxSeverity))#">
-		<P>Copy Result: <B>#(dir_tSC)#</B>
+		<a href="irislogviewer.csp">Clear filters</a>
+		<P><B>#(dir)#</B>
+		<input type="checkbox" id="checkAlerts" name="checkAlerts" value="checkAlerts">
+		<label for="checkAlerts">Show Alerts</label>
 		<a href="download_messages.txt" download="messages.log" target="_blank">Download link</a>
  	>
 	&html<<button type="button" onclick="goClickButton('DISPLAY')">Display</button>>
 	&html<<button type="button" onclick="goClickButton('RAW')">Raw</button>>
 	&html<<hr>>
+	//
+	If ($Get(iAlerts) = "true") {
 	&html<<table cellpadding=0 border=1 style="color:red;">>
 	Set pImportDeleteExtent = 4
 	Set pImportAlerts = 2
@@ -84,17 +94,20 @@
 	Set pMaxLines = -1
 	Set pFilter("pMaxLines") = pMaxLines
 	Set tSC = ##class(otw.log.Log).ImportMessages(alerts,.pAlertLines,.pFilter,pImport)
+	If pDebug Do ..DebugText(pAlertLines)
 	If pAlertLines {
 		Set tSC = ##class(otw.log.Log).OutputAlerts(alerts,iFormat,.pAlertLines)
 	}
+	//
  	&html<
 	</table>
 	<hr>>
+	}
 	&html<<table cellpadding=0 border=1>>
 	If ($Get(iFormat,"DISPLAY") = "DISPLAY") {
 		Set pFile = ""
 		Set pImport = 1
-		Set pMaxLines = 5
+		Set pMaxLines = 15
 		Set pFilter("pMaxLines") = pMaxLines
 		Set tSC = ##class(otw.log.Log).ImportMessages(pFile,.pLines,.pFilter,pImport)
 		Set tSC = ##class(otw.log.Log).OutputTableData()
@@ -119,6 +132,7 @@ function goClickButton(id)
 		document.location = "menu.csp";
 		return;
 	}
+	var iAlerts = document.getElementById("checkAlerts").checked;  // true or false
 	var iFormat = "DISPLAY";
 	if (id == 'RAW') {
 		iFormat = "RAW";
@@ -127,7 +141,9 @@ function goClickButton(id)
 	var iToPeriod = document.getElementById("toperiod").value;
 	var iMinSeverity = document.getElementById("fromlevel").value;
 	var iMaxSeverity = document.getElementById("tolevel").value;
-	var params = "iFormat=" + iFormat + "&iFromPeriod=" + iFromPeriod + "&iToPeriod=" + iToPeriod + "&iMinSeverity=" + iMinSeverity + "&iMaxSeverity=" + iMaxSeverity;
+	var params1 = "&iFormat=" + iFormat + "&iFromPeriod=" + iFromPeriod + "&iToPeriod=" + iToPeriod;
+	var params2 = "&iMinSeverity=" + iMinSeverity + "&iMaxSeverity=" + iMaxSeverity;
+	var params = "iAlerts=" + iAlerts + params1 + params2;
 	document.location = "irislogviewer.csp?" + params
 }
 </script>
