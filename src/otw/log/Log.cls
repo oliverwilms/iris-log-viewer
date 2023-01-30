@@ -272,6 +272,22 @@ ClassMethod ReadLogLines(pFile As %String, ByRef pLines, ByRef pFilter = 10, pIm
 	Write:pDebug pFile,!
 	Set pLines = 0
 	Set pMaxLines = $Get(pFilter("pMaxLines"),pFilter)
+	Set pMaxDT = $Get(pFilter("iToPeriod"),"")
+	If (pMaxDT ? 1.4N1"-"1.2N1"-"1.2N1"T".E) {
+		Set pMaxDate = $Piece(pMaxDT,"T",1)
+		Set pMaxDateH = $ZDateH(pMaxDate,8)
+		Set pMaxTime = $Piece(pMaxDT,"T",2)
+		Set pFilter("pMaxDateH") = pMaxDateH
+		Set pFilter("pMaxTime") = pMaxTime
+	}
+	Set pMinDT = $Get(pFilter("iFromPeriod"),"")
+	If (pMinDT ? 1.4N1"-"1.2N1"-"1.2N1"T".E) {
+		Set pMinDate = $Piece(pMinDT,"T",1)
+		Set pMinDateH = $ZDateH(pMinDate,8)
+		Set pMinTime = $Piece(pMinDT,"T",2)
+		Set pFilter("pMinDateH") = pMinDateH
+		Set pFilter("pMinTime") = pMinTime
+	}
 	Set tReturn = ""
 	Set timeout = 2
 	Try {
