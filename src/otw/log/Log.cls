@@ -322,5 +322,10 @@ ClassMethod ReadLogLines(pFile As %String, ByRef pLines, ByRef pFilter = 10, pIm
 	Quit $$$OK
 }
 
+ClassMethod TimesCompareIsBefore(pTime1 As %String = "", pTime2 As %String = "") As %Boolean
+{
+	Set x = (pTime2 ] pTime1)
+	Quit x
+}
 
 }
