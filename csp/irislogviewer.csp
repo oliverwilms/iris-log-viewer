@@ -20,7 +20,7 @@
 
 <script language="Cache" method="DisplayLog" arguments="">
 	New pDebug
-	Set pDebug = 1
+	Set pDebug = 0
 	Set iAlerts = 0
 	Set iFormat = "DISPLAY"
 	If ($data(%request.Data("iAlerts",1))) {
