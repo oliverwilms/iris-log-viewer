@@ -58,8 +58,10 @@ ClassMethod ImportLine(pLine As %String = "", ByRef pLog As Log, ByRef pFilter, 
 	Set tSC = $$$OK
 	Set pMaxDateH = $Get(pFilter("pMaxDateH"),-1)
 	Set pMinDateH = $Get(pFilter("pMinDateH"),0)
-	Set iMaxSeverity = $Get(pFilter("iMaxSeverity"),-1)
-	Set iMinSeverity = $Get(pFilter("iMinSeverity"),0)
+	Set iMaxSeverity = $Get(pFilter("iMaxSeverity"))
+	Set iMinSeverity = $Get(pFilter("iMinSeverity"))
+	If (iMaxSeverity = "") Set iMaxSeverity = -1
+	If (iMinSeverity = "") Set iMinSeverity = 0
 	Set pLogDate = ""
 	If (pLine ? 1.2N1"/"1.2N1"/"2N.E) {
 		Set pAA = $Piece(pLine,"/",1,2)
