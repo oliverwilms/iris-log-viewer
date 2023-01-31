@@ -3,9 +3,7 @@
  [![Reliability Rating](https://community.objectscriptquality.com/api/project_badges/measure?project=intersystems_iris_community%2Fintersystems-iris-dev-template&metric=reliability_rating)](https://community.objectscriptquality.com/dashboard?id=intersystems_iris_community%2Fintersystems-iris-dev-template)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat&logo=AdGuard)](LICENSE)
-# intersystems-iris-dev-template
-This is a basic template for a development environment to work with ObjectScript in InterSystems IRIS. It helps you edit, compile, commit/push, debug and test your ObjectScript code. It also aids in packaging your application as a module installable with ZPM. 
-The template is embedded python compatible.
+# iris-log-viewer
 
 ## Description
 This repository provides a read-to-go development environment for coding productively with InterSystems ObjectScript. This template:
@@ -15,10 +13,6 @@ This repository provides a read-to-go development environment for coding product
 * Promotes development with the 'Package First' paradigm. [Watch the video](https://www.youtube.com/watch?v=havPyPbUj1I)
 * Provides a unit testing environment: sample unit tests, tests module enablement
 * Ready for embedded python development: ENV varialbes are set up, CallIn service is On, all modules in requirements.txt will be installed during docker build.
-
-## Usage
-Start a new dev repository with InterSystems IRIS using this one as a template.
-Once you clone the new repo to your laptop and open VSCode (with the [InterSystems ObjectScript Extension Pack](https://marketplace.visualstudio.com/items?itemName=intersystems-community.objectscript-pack) installed) you'll be able to start development immediately.
 
 ## Prerequisites
 Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Docker desktop](https://www.docker.com/products/docker-desktop) installed.
@@ -195,8 +189,6 @@ Contains unit tests for the ObjectScript classes
 
 ### dev.md
 
-Contains a set of useful commands that will help during the development
-
 ### docker-compose.yml
 
 A docker engine helper file to manage images building and rule ports mapping an the host to container folders(volumes) mapping
@@ -206,15 +198,9 @@ A docker engine helper file to manage images building and rule ports mapping an 
 The simplest dockerfile which starts IRIS and imports code from /src folder into it.
 Use the related docker-compose.yml to easily setup additional parametes like port number and where you map keys and host folders.
 
-
-### iris.script
-
-Contains objectscript commands that are feeded to iris during the image building
-
 ### module.xml
 
 IPM Module's description of the code in the repository.
 It describes what is loaded with the method, how it is being tested and what apps neeed to be created, what files need to be copied.
 
 [Read about all the files in this artilce](https://community.intersystems.com/post/dockerfile-and-friends-or-how-run-and-collaborate-objectscript-projects-intersystems-iris)
-
