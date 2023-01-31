@@ -65,6 +65,9 @@
 	Set target = dir_"/download_messages.txt"
 	Set pDeleteBeforeCopy = 1
 	Set tSC = ##class(otw.log.Log).CopyFile(source,target,pDeleteBeforeCopy,.return)
+	If ($Get(iAlerts) = "true") {
+		Set tAlertsChecked = " checked"
+	}
 	&html<
 		<P><B>Date/Time:</B>
 		<label for="fromperiod">From</label>
@@ -78,7 +81,7 @@
 		<input type="text" id="tolevel" name="to" value="#($Get(iMaxSeverity))#">
 		<a href="irislogviewer.csp">Clear filters</a>
 		<P><B>#(dir)#</B>
-		<input type="checkbox" id="checkAlerts" name="checkAlerts" value="checkAlerts">
+		<input type="checkbox" id="checkAlerts" name="checkAlerts" value="checkAlerts"#($Get(tAlertsChecked))#>
 		<label for="checkAlerts">Show Alerts</label>
 		<a href="download_messages.txt" download="messages.log" target="_blank">Download link</a>
  	>
