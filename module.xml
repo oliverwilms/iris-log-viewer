@@ -8,7 +8,7 @@
       <Packaging>module</Packaging>
       <SourcesRoot>src</SourcesRoot>
       <Resource Name="otw.log.PKG"/>
-      <UnitTest Name="/tests" Package="dc.sample.unittests" Phase="test"/>
+      <UnitTest Name="/tests" Package="otw.Test" Phase="test"/>
       <CSPApplication 
         Url="/irisapp"
         MatchRoles=":{$dbrole}"
