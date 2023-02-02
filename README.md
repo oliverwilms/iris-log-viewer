@@ -141,12 +141,11 @@ zpm:IRISAPP>test iris-log-viewer
 [IRISAPP|iris-log-viewer]       Configure SUCCESS
 [IRISAPP|iris-log-viewer]       Activate SUCCESS
 [IRISAPP|iris-log-viewer]       Test START
-
 Use the following URL to view the result:
 http://172.28.0.2:52773/csp/sys/%25UnitTest.Portal.Indices.cls?Index=1&$NAMESPACE=IRISAPP
 All PASSED
 
-[dc-sample-template]    Test SUCCESS
+[IRISAPP|iris-log-viewer]       Test SUCCESS
 zpm:IRISAPP>
 ```
 
