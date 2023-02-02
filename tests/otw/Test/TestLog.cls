@@ -20,9 +20,9 @@ ClassMethod StartDev(ByRef pDev) As %Status
 	Set tFilename = "Test_Log"_d_tDT
 	Set pDev = tPath_tFilename
 	Set timeout = 1
-	Open dev:("NRW"):timeout
+	Open pDev:("NRW"):timeout
 	Else  Write "cannot Open",!
-	Use dev
+	Use pDev
 	Quit $$$OK
 }
 
