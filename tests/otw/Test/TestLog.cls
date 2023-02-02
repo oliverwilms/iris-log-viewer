@@ -24,7 +24,7 @@ ClassMethod StartDev(ByRef pDev) As %Status
 	Set timeout = 1
 	Open pDev:("NRW"):timeout
 	Else  Write "cannot Open",!
-	Use pDev
+	//Use pDev
 	Quit $$$OK
 }
 
@@ -48,7 +48,9 @@ Method TestAlerts()
 	Set pFilter("pMaxLines") = pMaxLines
 	Set tSC = ##class(otw.log.Log).ImportMessages(pFile,.pLines,.pFilter,pImport)
 	Do ..LogMessage("Imported "_pLines_" messages.")
+	Use dev
 	Set tSC = ##class(otw.log.Log).OutputTableData()
+	Use 0
 	Do $$$AssertEquals(pLines,(pMaxLines),"imported lines count")
 	Do ..StopDev(.dev)
 }
@@ -66,8 +68,10 @@ Method TestMessages()
 	Set pFilter("pMaxLines") = pMaxLines
 	Set tSC = ##class(otw.log.Log).ImportMessages(pFile,.pLines,.pFilter,pImport)
 	Do ..LogMessage("Imported "_pLines_" messages.")
+	Use dev
 	Set tSC = ##class(otw.log.Log).OutputTableData()
-	Do $$$AssertEquals(pLines,(10),"imported lines count")
+	Use 0
+	Do $$$AssertEquals(pLines,(pMaxLines),"imported lines count")
 	Do ..StopDev(.dev)
 }
 
