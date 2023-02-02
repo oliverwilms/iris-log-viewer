@@ -114,35 +114,33 @@ IRISAPP>zpm
 =============================================================================
 zpm:IRISAPP>load /home/irisowner/irisdev
 
-[dc-sample-template]    Reload START (/irisrun/repo/)
-[dc-sample-template]    Reload SUCCESS
-[dc-sample-template]    Module object refreshed.
-[dc-sample-template]    Validate START
-[dc-sample-template]    Validate SUCCESS
-[dc-sample-template]    Compile START
-[dc-sample-template]    Compile SUCCESS
-[dc-sample-template]    Activate START
-[dc-sample-template]    Configure START
-[dc-sample-template]    Configure SUCCESS
-[dc-sample-template]    MakeDeployed START
-[dc-sample-template]    MakeDeployed SUCCESS
-[dc-sample-template]    Activate SUCCESS
-zpm:IRISAPP>test dc-sample-template
+[IRISAPP|iris-log-viewer]       Reload START (/home/irisowner/irisdev/)
+[IRISAPP|iris-log-viewer]       requirements.txt START
+[IRISAPP|iris-log-viewer]       requirements.txt SUCCESS
+[IRISAPP|iris-log-viewer]       Reload SUCCESS
+[iris-log-viewer]       Module object refreshed.
+[IRISAPP|iris-log-viewer]       Validate START
+[IRISAPP|iris-log-viewer]       Validate SUCCESS
+[IRISAPP|iris-log-viewer]       Compile START
+[IRISAPP|iris-log-viewer]       Compile SUCCESS
+[IRISAPP|iris-log-viewer]       Activate START
+[IRISAPP|iris-log-viewer]       Configure START
+[IRISAPP|iris-log-viewer]       Configure SUCCESS
+[IRISAPP|iris-log-viewer]       Activate SUCCESS
+zpm:IRISAPP>test iris-log-viewer
 
-[dc-sample-template]    Reload START (/irisrun/repo/)
-[dc-sample-template]    Reload SUCCESS
-[dc-sample-template]    Module object refreshed.
-[dc-sample-template]    Validate START
-[dc-sample-template]    Validate SUCCESS
-[dc-sample-template]    Compile START
-[dc-sample-template]    Compile SUCCESS
-[dc-sample-template]    Activate START
-[dc-sample-template]    Configure START
-[dc-sample-template]    Configure SUCCESS
-[dc-sample-template]    MakeDeployed START
-[dc-sample-template]    MakeDeployed SUCCESS
-[dc-sample-template]    Activate SUCCESS
-[dc-sample-template]    Test STARTIt works!
+[IRISAPP|iris-log-viewer]       Reload START (/home/irisowner/irisdev/)
+[IRISAPP|iris-log-viewer]       Reload SUCCESS
+[iris-log-viewer]       Module object refreshed.
+[IRISAPP|iris-log-viewer]       Validate START
+[IRISAPP|iris-log-viewer]       Validate SUCCESS
+[IRISAPP|iris-log-viewer]       Compile START
+[IRISAPP|iris-log-viewer]       Compile SUCCESS
+[IRISAPP|iris-log-viewer]       Activate START
+[IRISAPP|iris-log-viewer]       Configure START
+[IRISAPP|iris-log-viewer]       Configure SUCCESS
+[IRISAPP|iris-log-viewer]       Activate SUCCESS
+[IRISAPP|iris-log-viewer]       Test START
 
 Use the following URL to view the result:
 http://172.28.0.2:52773/csp/sys/%25UnitTest.Portal.Indices.cls?Index=1&$NAMESPACE=IRISAPP
