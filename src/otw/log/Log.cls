@@ -56,6 +56,7 @@ ClassMethod CopyFile(pFrom As %String, pTo As %String, pDeleteBeforeCopy As %Boo
 ClassMethod ImportLine(pLine As %String = "", ByRef pLog As Log, ByRef pFilter, pImport = 1) As %Status
 {
 	Set tSC = $$$OK
+	Set pLogDTunsure = 1  // Inherit Date and Time from previous line
 	Set pMaxDateH = $Get(pFilter("pMaxDateH"),-1)
 	Set pMinDateH = $Get(pFilter("pMinDateH"),0)
 	Set iMaxSeverity = $Get(pFilter("iMaxSeverity"))
@@ -86,6 +87,7 @@ ClassMethod ImportLine(pLine As %String = "", ByRef pLog As Log, ByRef pFilter, 
 				Set pFF = $Piece(pMS," ",1)
 				Set pLogTime = pHMS_":"_pFF
 				//Set pLogTimeH = $ZTimeH(pLogTime)  // <ILLEGAL VALUE>
+				Set pLogDTunsure = 0  // Do NOT inherit Date and Time from previous line
 				Set pos = pos + $Length(pLogTime)
 				Set pTest = $Extract(pLine,pos,pos)
 				If (pTest = " ") {
@@ -108,8 +110,7 @@ ClassMethod ImportLine(pLine As %String = "", ByRef pLog As Log, ByRef pFilter, 
 			}
 		}
 	}
-	If (pLine ? 1A.E) {
-		Set pLogDTunsure = 1  // Inherit Date and Time from previous line
+	If (pLogDTunsure = 1) {  // Inherit Date and Time from previous line
 		Try {
 			Set pLogDateH = pLog.LogDate
 			Set pLogTime = pLog.LogTime
