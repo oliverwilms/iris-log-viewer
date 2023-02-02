@@ -112,7 +112,7 @@ IRISAPP>zpm
 || Welcome to the Package Manager Shell (ZPM).                             ||
 || Enter q/quit to exit the shell. Enter ?/help to view available commands ||
 =============================================================================
-zpm:IRISAPP>load /irisrun/repo
+zpm:IRISAPP>load /home/irisowner/irisdev
 
 [dc-sample-template]    Reload START (/irisrun/repo/)
 [dc-sample-template]    Reload SUCCESS
