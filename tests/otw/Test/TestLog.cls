@@ -13,6 +13,8 @@ ClassMethod StartDev(ByRef pDev) As %Status
 	Set tDateTime = $ZDateTime($NOW(),8,1,3)
 	Set tDT = $Translate(tDateTime,".:","_")
 	Set tPath = "/home/irisowner/irisdev/tests/"
+	// irisowner does not have write permission in tests
+	Set tPath = "/home/irisowner/irisdev/"
 	If (0 = ##class(%File).Exists(tPath)) {
 		Set tSC = ##class(%File).CreateDirectory(tPath)
 	}
