@@ -3,7 +3,7 @@ Class otw.Test.TestLog Extends %UnitTest.TestCase
 
 ClassMethod Go() As %Status
 {
-	Set ^UnitTestRoot="/opt/unittests"
+	//Set ^UnitTestRoot="/opt/unittests"
 	Set tSC = ##class(%UnitTest.Manager).RunTest("test-log","/loadudl")
 	Quit tSC
 }
@@ -12,7 +12,7 @@ ClassMethod StartDev(ByRef pDev) As %Status
 {
 	Set tDateTime = $ZDateTime($NOW(),8,1,3)
 	Set tDT = $Translate(tDateTime,".:","_")
-	Set tPath = "/opt/unittests/"
+	Set tPath = "/home/irisowner/irisdev/tests/"
 	If (0 = ##class(%File).Exists(tPath)) {
 		Set tSC = ##class(%File).CreateDirectory(tPath)
 	}
