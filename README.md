@@ -6,12 +6,11 @@
 # iris-log-viewer
 
 ## Description
-This repository provides a read-to-go development environment for coding productively with InterSystems ObjectScript. This template:
-* Runs InterSystems IRIS Community Edition in a docker container
-* Creates a new namespace and database IRISAPP
-* Loads the ObjectScript code into IRISAPP database using Package Manager 
-* Promotes development with the 'Package First' paradigm. [Watch the video](https://www.youtube.com/watch?v=havPyPbUj1I)
-* Provides a unit testing environment: sample unit tests, tests module enablement
+iris-log-viewer provides an alternative web page to the Console Log Viewer web page available in IRIS Management Portal:
+* Allows Download of messages.log
+* Allows Filter based on Date and Time
+* Allows Filter based on Severity Level 
+* Includes a unit testing environment: sample unit tests
 * Ready for embedded python development: ENV varialbes are set up, CallIn service is On, all modules in requirements.txt will be installed during docker build.
 
 ## Prerequisites
