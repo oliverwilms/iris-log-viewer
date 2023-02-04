@@ -14,13 +14,13 @@ ClassMethod HelloWorld() As %Status
   Return sc
 }
 
-ClassMethod MaxQuantity() As %String
+ClassMethod ReadFile() As %String
 {
   Set maxq = ""
   Try {
     Set td = ##class(%SYS.Python).Import("iris-log-viewer")
-    Set file = $System.Util.ManagerDirectory()_"data/QuantityOnHandSync.csv"
-    Set maxq = td.maxqty(file)
+    Set file = $System.Util.ManagerDirectory()_"messages.log"
+    Set maxq = td.fileread(file)
   }
   Catch exp {
     IF 1=exp.%IsA("%Exception.SystemException") {
@@ -47,22 +47,6 @@ ClassMethod MaxQuantity() As %String
     WRITE "Data: ",exp.Data,!     
   }
   Return maxq
-}
-
-ClassMethod Source() As %String
-{
-  Set sc = $$$OK
-  Set td = ##class(%SYS.Python).Import("iris-log-viewer")
-  Set source = td.source()
-  Return source
-}
-
-ClassMethod Target() As %String
-{
-  Set sc = $$$OK
-  Set td = ##class(%SYS.Python).Import("iris-log-viewer")
-  Set target = td.target()
-  Return target
 }
 
 ClassMethod Today() As %Status
