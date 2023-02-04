@@ -5,16 +5,17 @@ def fileread(filename=""):
     if filename=="":
         print("filename is required")
         quit()
-        file = open(filename,"r")
-        atEnd = False
-        time1 = round(datetime.timestamp(datetime.now()) * 1000)
-        while not atEnd:
-            line = file.readline()
-            if not line:
-                atEnd = True
-        time2 = round(datetime.timestamp(datetime.now()) * 1000)
-        file.close()
-        print("fileread execution: ",((time2-time1)/1000),"s")
+    file = open(filename,"r")
+    atEnd = False
+    time1 = round(datetime.timestamp(datetime.now()) * 1000)
+    while not atEnd:
+        line = file.readline()
+        if not line:
+            atEnd = True
+    time2 = round(datetime.timestamp(datetime.now()) * 1000)
+    file.close()
+    print("fileread execution: ",((time2-time1)/1000),"s")
+    return str(filename)
 
 def maxqty(filename="QuantityOnHandSync.csv"):
     # Read data
