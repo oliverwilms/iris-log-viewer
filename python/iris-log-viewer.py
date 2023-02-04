@@ -16,6 +16,7 @@ def fileread(filename=""):
     # time2 = round(datetime.timestamp(datetime.now()) * 1000)
     file.close()
     # print("fileread execution: ",((time2-time1)/1000),"s")
+    print(filename)
     return str(filename)
 
 def maxqty(filename="QuantityOnHandSync.csv"):
