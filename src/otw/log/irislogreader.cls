@@ -8,6 +8,7 @@ ClassMethod Test1(
 	pImport,
 	pDebug = 1) As %String
 {
+	Set time1 = $ZHOROLOG  // $ZHOROLOG contains the number of seconds elapsed since the most recent IRIS startup.
 	If pDebug {
 		Write "Test1 begins at ",$ZDATETIME($HOROLOG),!
 	}
@@ -31,8 +32,11 @@ ClassMethod Test1(
 	}
 	Set tSC = ##class(Log).ReadLogLines(pFile,.pLines,.pFilter,pImport,pDebug)
 	If pDebug {
-		Write "Import Messages ends at ",$ZDATETIME($HOROLOG),!
+		Write "Test1 ends at ",$ZDATETIME($HOROLOG),!
 	}
+	Set time2 = $ZHOROLOG
+	Set diff = time2 - time1
+	Write "Test1 execution time: "_diff, !
 	Quit ""
 }
 
