@@ -49,6 +49,30 @@ ClassMethod ReadFile() As %String
   Return maxq
 }
 
+ClassMethod ReadFileUsingPython(pFile As %String) [ Language = python ]
+{
+  from datetime import datetime
+  time1 = datetime.timestamp(datetime.now())
+  print(time1)
+  if pFile=="":
+    print("filename is required.")
+    quit()
+  file = open(pFile,"r")
+  atEnd = False
+  
+  while not atEnd:
+    line = file.readline()
+    if line:
+      print(line)
+    if not line:
+      atEnd = True
+  
+  file.close()
+  time2 = datetime.timestamp(datetime.now())
+  print(time2)
+  print("Execution time: ",(time2-time1))
+}
+
 ClassMethod Today() As %Status
 {
   Set sc = $$$OK
@@ -57,9 +81,7 @@ ClassMethod Today() As %Status
   Return sc
 }
 
-ClassMethod Write(
-	pName As %String = "otw",
-	pTaxID As %String = 123) [ Language = objectscript ]
+ClassMethod Write(pName As %String = "otw", pTaxID As %String = 123) [ Language = objectscript ]
 {
     write !, "Name: ", pName, " TaxID: ", pTaxID
 }
