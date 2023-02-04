@@ -52,6 +52,7 @@ ClassMethod ReadFile() As %String
 ClassMethod ReadFileUsingPython(pFile As %String) [ Language = python ]
 {
   from datetime import datetime
+  import iris
   time1 = datetime.timestamp(datetime.now())
   print(time1)
   if pFile=="":
@@ -63,7 +64,7 @@ ClassMethod ReadFileUsingPython(pFile As %String) [ Language = python ]
   while not atEnd:
     line = file.readline()
     if line:
-      print(line)
+      status = iris.cls('otw.log.Log').ImportLine(line)
     if not line:
       atEnd = True
   
