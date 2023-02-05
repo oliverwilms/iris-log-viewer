@@ -8,9 +8,9 @@ on:
 
 env:
   # Change this section according to your needs
-  IMAGE_NAME:   online
-  SERVICE:      online
-  DOMAIN_NAME:  online.community.intersystems.com
+  IMAGE_NAME:   iris-log-viewer
+  SERVICE:      iris-log-viewer
+  DOMAIN_NAME:  iris-log-viewer.demo.community.intersystems.com
 
   # Leave this section untouched
   PROJECT_ID:   iris-community-demos
