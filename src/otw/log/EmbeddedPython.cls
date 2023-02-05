@@ -58,7 +58,7 @@ ClassMethod ReadFileUsingPython(pFile As %String) [ Language = python ]
   if pFile=="":
     print("filename is required.")
     quit()
-  file = open(pFile,"r")
+  file = open(pFile, "r", encoding="utf-8", errors="ignore")
   atEnd = False
   
   while not atEnd:
