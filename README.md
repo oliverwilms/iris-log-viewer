@@ -14,7 +14,7 @@ iris-log-viewer provides an alternative to the Console Log Viewer web page avail
 * Allows Filter based on Date and Time
 * Allows Filter based on Severity Level 
 * Includes a unit testing environment: sample unit tests
-* Ready for embedded python development: ENV varialbes are set up, CallIn service is On, all modules in requirements.txt will be installed during docker build.
+* Using Embedded Python to read messages.log file for performance comparison between Python and objectscript.
 
 ## Prerequisites
 Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Docker desktop](https://www.docker.com/products/docker-desktop) installed.
@@ -105,6 +105,10 @@ zpm:IRISAPP>
 In case of test errors, you can find more details back in the UnitTest portal, which can be easily opened via ObjectScript menu in VSCode:
 
 ![vscvode unittest](https://user-images.githubusercontent.com/2781759/152678943-7d9d9696-e26a-449f-b1d7-f924528c8e3a.png)
+
+## Embedded Python for iris-log-viewer
+
+[Read about Embedded Python in iris-log-viewer in this artilce](https://community.intersystems.com/post/embedded-python-iris-log-viewer-conclusion)
 
 ## What else is inside the repository
 
