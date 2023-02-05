@@ -56,19 +56,13 @@ ClassMethod ReadFileUsingPython(pFile As %String) [ Language = python ]
   time1 = datetime.timestamp(datetime.now())
   print(time1)
   if pFile=="":
-    print("filename is required.")
-    quit()
-  file = open(pFile, "r", encoding="utf-8", errors="ignore")
-  atEnd = False
-  
-  while not atEnd:
-    line = file.readline()
-    if line:
-      status = iris.cls('otw.log.Log').ImportLine(line)
-    if not line:
-      atEnd = True
-  
-  file.close()
+    raise Exception("filename is required.")
+
+  file = open(pFile,"r", encoding="utf-8", errors="ignore")
+  log = iris.cls('otw.log.Log')
+  for line in file:
+    status = log.ImportLine(line)
+
   time2 = datetime.timestamp(datetime.now())
   print(time2)
   print("Execution time: ",(time2-time1))
