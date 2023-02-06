@@ -58,10 +58,10 @@ ClassMethod ReadFileUsingPython(pFile As %String) [ Language = python ]
   if pFile=="":
     raise Exception("filename is required.")
 
-  file = open(pFile,"r", encoding="utf-8", errors="ignore")
-  log = iris.cls('otw.log.Log')
-  for line in file:
-    status = log.ImportLine(line)
+  with open(pFile,"r", encoding="utf-8", errors="ignore") as file:
+    log = iris.cls('otw.log.Log')
+    for line in file:
+      status = log.ImportLine(line)
 
   time2 = datetime.timestamp(datetime.now())
   print(time2)
