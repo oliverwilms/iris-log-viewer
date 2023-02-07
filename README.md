@@ -49,7 +49,7 @@ IRISAPP>
 To exit the terminal, do any of the following:
 
 ```
-Enter HALT or H (not case-sensitive)
+Enter h, halt, HALT or H (not case-sensitive)
 ```
 
 ## Running unit tests
