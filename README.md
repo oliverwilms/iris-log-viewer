@@ -16,6 +16,9 @@ iris-log-viewer provides an alternative to the Console Log Viewer web page avail
 * Includes a unit testing environment: sample unit tests
 * Using Embedded Python to read messages.log file for performance comparison between Python and objectscript.
 
+## Online Demo
+[You can find online demo here:](https://iris-log-viewer.demo.community.intersystems.com/irisapp/irislogviewer.csp)
+
 ## Prerequisites
 Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Docker desktop](https://www.docker.com/products/docker-desktop) installed.
 
