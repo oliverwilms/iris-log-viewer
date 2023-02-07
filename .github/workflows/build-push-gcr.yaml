@@ -1,18 +1,41 @@
 name: Cloud Run Deploy
 
 on:
-  push:
-    branches:
-    - master
-    - main
+  workflow_call:
+    inputs:
+      name:
+        description: iris-log-viewer
+        required: true
+        type: string
+    secrets:
+      SERVICE_ACCOUNT_KEY:
+        required: true
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: iris-log-viewer
+        required: true
+        type: string
+      ref:
+        description: master
+        required: true
+        type: choice
+        default: main
+        options:
+          - master
+          - main
+      name:
+        description: iris-log-viewer
+        required: true
+        type: string
 
 env:
   # Change this section according to your needs
-  IMAGE_NAME:   iris-log-viewer
-  SERVICE:      iris-log-viewer
-  DOMAIN_NAME:  iris-log-viewer.demo.community.intersystems.com
+  IMAGE_NAME:   ${{ inputs.name }}
+  SERVICE:      ${{ inputs.name }}
+  DOMAIN_NAME:  ${{ inputs.name }}.demo.community.intersystems.com
 
-  # Leave this section untouched
+# Leave this section untouched
   PROJECT_ID:   iris-community-demos
   CLUSTER_NAME: demo
   GITHUB_SHA:   ${{ github.sha }}
@@ -22,11 +45,15 @@ env:
 
 jobs:
   deploy-cloud-run:
+    if: github.event.repository.fork == false && github.event.repository.is_template == false
     name: Deploy to Cloud Run
     runs-on: ubuntu-20.04
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.ref }}
 
     - name: Google Authentication
       uses: google-github-actions/auth@v1.0.0
@@ -36,9 +63,9 @@ jobs:
     - name: Get GKE credentials
       uses: google-github-actions/get-gke-credentials@v1.0.1
       with:
-        project_id: iris-community-demos
-        cluster_name: demo
-        location: europe-west2
+        project_id:   {{ env.PROJECT_ID }}
+        cluster_name: {{ env.CLUSTER_NAME }}
+        location:     {{ env.REGION }}
 
     - name: Setup gcloud cli
       uses: google-github-actions/setup-gcloud@v1.0.0
@@ -46,18 +73,16 @@ jobs:
         version: '412.0.0'
 
     - name: Authorize Docker push
-      run: gcloud --quiet auth configure-docker
-
+      run: |
+        gcloud auth list
+        gcloud --quiet auth configure-docker
     - name: Build and Push image
       run: |
-        docker buildx build -t ${GCR_LOCATION}/${PROJECT_ID}/${IMAGE_NAME}:${GITHUB_SHA} .
-        docker push ${GCR_LOCATION}/${PROJECT_ID}/${IMAGE_NAME}:${GITHUB_SHA}
-
+        docker buildx build -t ${GCR_LOCATION}/${PROJECT_ID}/${IMAGE_NAME}:${GITHUB_SHA} --push .
     - name: Deploy to Cloud Run
       run: |
         echo "[INFO] Set google project..."
         gcloud config set project ${PROJECT_ID}
-
         echo "[INFO] Deploy service..."
         gcloud run deploy ${SERVICE}   \
           --platform gke               \
@@ -66,11 +91,9 @@ jobs:
           --namespace ${NAMESPACE}     \
           --port 52773                 \
           --min-instances 1            \
-          --memory 512Mi               \
           --timeout 300                \
           --verbosity debug            \
           --image ${GCR_LOCATION}/${PROJECT_ID}/${IMAGE_NAME}:${GITHUB_SHA}
-
         echo "[INFO] Create domain mappings..."
         if [[ $(gcloud run domain-mappings list --platform gke --cluster ${CLUSTER_NAME} --cluster-location ${REGION} --namespace ${NAMESPACE} --filter "DOMAIN=${DOMAIN_NAME}" | grep -v DOMAIN | wc -l) == 0 ]]; then
           gcloud run domain-mappings create \
@@ -82,7 +105,6 @@ jobs:
             --verbosity debug               \
             --domain ${DOMAIN_NAME}
         fi
-
     - name: Create domain name
       run: |
         kubectl version
@@ -96,7 +118,7 @@ jobs:
         else
           echo "[INFO] Domain [${DOMAIN_NAME}] is in the domains list. Leave untouched...";     \
         fi
-
     - name: Enable TLS-access
       run: |
+        kubectl version
         kubectl patch configmap config-domainmapping -n knative-serving -p '{"data":{"autoTLS":"Enabled"}}'
