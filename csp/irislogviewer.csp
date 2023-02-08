@@ -21,6 +21,7 @@
 <script language="Cache" method="DisplayLog" arguments="">
 	New pDebug
 	Set pDebug = 0
+	Set pImportDeleteExtent = 4  // I want to Delete Extent ONCE
 	Set iAlerts = 0
 	Set iFormat = "DISPLAY"
 	If ($data(%request.Data("iAlerts",1))) {
@@ -91,7 +92,7 @@
 	//
 	If ($Get(iAlerts) = "true") {
 	&html<<table cellpadding=0 border=1 style="color:red;">>
-	Set pImportDeleteExtent = 4
+	Set pImportDeleteExtent = $Get(pImportDeleteExtent,4)  // Delete Extent only ONCE
 	Set pImportAlerts = 2
 	Set pImport = pImportDeleteExtent + pImportAlerts
 	Set pMaxLines = -1
@@ -101,6 +102,7 @@
 	If pAlertLines {
 		Set tSC = ##class(otw.log.Log).OutputAlerts(alerts,iFormat,.pAlertLines)
 	}
+	Set pImportDeleteExtent = 0  // Delete Extent already happened above
 	//
  	&html<
 	</table>
@@ -109,7 +111,7 @@
 	&html<<table cellpadding=0 border=1>>
 	If ($Get(iFormat,"DISPLAY") = "DISPLAY") {
 		Set pFile = ""
-		Set pImport = 1
+		Set pImport = pImportDeleteExtent + 1  // I want to Delete Extent ONCE
 		Set pMaxLines = -1
 		Set pFilter("pMaxLines") = pMaxLines
 		Set tSC = ##class(otw.log.Log).ImportMessages(pFile,.pLines,.pFilter,pImport)
