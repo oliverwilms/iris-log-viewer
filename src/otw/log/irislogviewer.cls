@@ -9,6 +9,7 @@ ClassMethod OnPage() As %Status
         <body>>
     Set iAlerts = 0
 	Set iFormat = "DISPLAY"
+	Set pImportDeleteExtent = 4  // I want to Delete Extent ONCE
 	Set thisHref = "otw.log.irislogviewer.cls"
 	If ($data(%request.Data("iAlerts",1))) {
 	 	Set iAlerts = %request.Data("iAlerts",1)
@@ -75,7 +76,7 @@ ClassMethod OnPage() As %Status
 	&html<<hr>>
 	If ($Get(iAlerts) = "true") {
 		&html<<table cellpadding=0 border=1 style="color:red;">>
-		Set pImportDeleteExtent = 4
+		Set pImportDeleteExtent = $Get(pImportDeleteExtent,4)  // Delete Extent only ONCE
 		Set pImportAlerts = 2
 		Set pImport = pImportDeleteExtent + pImportAlerts
 		Set pMaxLines = -1
@@ -84,6 +85,7 @@ ClassMethod OnPage() As %Status
 		If pAlertLines {
 			Set tSC = ##class(otw.log.Log).OutputAlerts(alerts,iFormat,.pAlertLines)
 		}
+		Set pImportDeleteExtent = 0  // Delete Extent already happened above
 		&html<
 			</table>
 			<hr>>
@@ -91,7 +93,7 @@ ClassMethod OnPage() As %Status
 	&html<<table cellpadding=0 border=1>>
 	If ($Get(iFormat,"DISPLAY") = "DISPLAY") {
 		Set pFile = ""
-		Set pImport = 1
+		Set pImport = pImportDeleteExtent + 1  // I want to Delete Extent ONCE
 		Set pMaxLines = 15
 		Set pFilter("pMaxLines") = pMaxLines
 		Set tSC = ##class(otw.log.Log).ImportMessages(pFile,.pLines,.pFilter,pImport)
