@@ -2,7 +2,17 @@
 <html>
 <head>
 
-<title>	Console Log Viewer </title>
+	<title>	Console Log Viewer </title>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 </head>
 
@@ -86,8 +96,8 @@
 		<label for="checkAlerts">Show Alerts</label>
 		<a href="download_messages.txt" download="messages.log" target="_blank">Download link</a>
  	>
-	&html<<button type="button" onclick="goClickButton('DISPLAY')">Display</button>>
-	&html<<button type="button" onclick="goClickButton('RAW')">Raw</button>>
+	&html<<button type="button" class="btn btn-primary" onclick="goClickButton('DISPLAY')">Display</button>>
+	&html<<button type="button" class="btn btn-dark" onclick="goClickButton('RAW')">Raw</button>>
 	&html<<hr>>
 	//
 	If ($Get(iAlerts) = "true") {
@@ -108,8 +118,8 @@
 	</table>
 	<hr>>
 	}
-	&html<<table cellpadding=0 border=1>>
 	If ($Get(iFormat,"DISPLAY") = "DISPLAY") {
+		&html<<table class="table table-hover table-bordered">>
 		Set pFile = ""
 		Set pImport = pImportDeleteExtent + 1  // I want to Delete Extent ONCE
 		Set pMaxLines = -1
@@ -118,6 +128,7 @@
 		Set tSC = ##class(otw.log.Log).OutputTableData()
 	}
 	If ($Get(iFormat,"DISPLAY") = "RAW") {
+		&html<<table cellpadding=0 border=1>>
 		Set pFile = ""
 		Set pImport = 0
 		Set pMaxLines = -1
