@@ -6,7 +6,7 @@
 
 http://localhost:52795/irisapp/irislogviewer.csp
 
-![screenshot](https://github.com/oliverwilms/bilder/blob/main/iris-log-viewer.png)
+![screenshot](https://github.com/oliverwilms/bilder/blob/main/iris-log-viewer.JPG)
 
 ## Description
 iris-log-viewer provides an alternative to the Console Log Viewer web page available in IRIS Management Portal:
