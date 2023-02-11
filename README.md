@@ -19,7 +19,7 @@ iris-log-viewer provides an alternative to the Console Log Viewer web page avail
 ## About iris-log-viewer
 Read my first [Article](https://community.intersystems.com/post/console-log-viewer-download-link-and-filters)
 
-Online Demo [You can find online demo here:](https://iris-log-viewer.demo.community.intersystems.com/irisapp/irislogviewer.csp)
+You can find [Online Demo here:](https://iris-log-viewer.demo.community.intersystems.com/irisapp/irislogviewer.csp)
 
 Watch my latest [YouTube video](https://youtu.be/z2iQz0ynOWc)
 
