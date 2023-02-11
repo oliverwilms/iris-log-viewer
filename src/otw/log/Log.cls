@@ -252,7 +252,9 @@ ClassMethod OutputTableData(pAlertFlag = 0) As %Status
 	IF (tResult.%SQLCODE=0) { /*WRITE !,"Created a query",!*/ }
 	ELSEIF (tResult.%SQLCODE=-361) { /*WRITE !,"Query exists: ",tResult.%Message*/ }
 	ELSE { /*WRITE !,"CREATE QUERY error: ",tResult.%SQLCODE," ",tResult.%Message*/ QUIT tSC}
-	Write !,"<tr><th>Date</th><th>Time</th><th>Job</th><th>L</th><th>Text</th></tr>"
+	&html<<thead class="thead-dark"><tr><th>Date</th><th>Time</th><th>Job</th><th>L</th><th>Text</th></tr></thead>>
+	&html<<tbody>>
+	;Write !,"<tr><th>Date</th><th>Time</th><th>Job</th><th>L</th><th>Text</th></tr>"
 	While tResult.%Next() {
 		Set tValue = tResult.ID
 		Set tLogDTunsure = tResult.LogDTun
@@ -263,7 +265,7 @@ ClassMethod OutputTableData(pAlertFlag = 0) As %Status
 			Set tLogTime = tResult.LogTime
 		}
 	 	Set pTrClick = ""
-		Write !,"<tr onclick=",tQuote,$Replace(pTrClick,"#",tValue),tQuote,">"
+		Write !,"<tr onclick=",tQuote,$Replace(pTrClick,"#",tValue),tQuote," class=""",$s(tResult.Severity>=2:"table-danger",tResult.Severity=1:"table-warning",1:""),""">"
 		Write !,"<td>",tLogDate,"</td>"
 		//Write !,"<td>",$ZTIME(tResult.TranTime),"</td>"
 		Write !,"<td>",tLogTime,"</td>"
@@ -272,6 +274,7 @@ ClassMethod OutputTableData(pAlertFlag = 0) As %Status
 		Write !,"<td>",tResult.Text,"</td>"
 		Write !,"</tr>"
 	}
+	&html<</tbody>>
 	Quit tSC
 }
 
@@ -343,6 +346,42 @@ ClassMethod TimesCompareIsBefore(pTime1 As %String = "", pTime2 As %String = "")
 {
 	Set x = (pTime2 ] pTime1)
 	Quit x
+}
+
+Storage Default
+{
+<Data name="LogDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Alert</Value>
+</Value>
+<Value name="3">
+<Value>LogDate</Value>
+</Value>
+<Value name="4">
+<Value>LogTime</Value>
+</Value>
+<Value name="5">
+<Value>LogDTun</Value>
+</Value>
+<Value name="6">
+<Value>Process</Value>
+</Value>
+<Value name="7">
+<Value>Severity</Value>
+</Value>
+<Value name="8">
+<Value>Text</Value>
+</Value>
+</Data>
+<DataLocation>^otw.log.LogD</DataLocation>
+<DefaultData>LogDefaultData</DefaultData>
+<IdLocation>^otw.log.LogD</IdLocation>
+<IndexLocation>^otw.log.LogI</IndexLocation>
+<StreamLocation>^otw.log.LogS</StreamLocation>
+<Type>%Storage.Persistent</Type>
 }
 
 }
